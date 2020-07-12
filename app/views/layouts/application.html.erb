@@ -13,51 +13,56 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body >
-    <div class="container-fluid">
+  <body class="container-fluid">
+    <div id="top">
       <!--  upper nav index bar  -->
         <div id="menu" class="row navbar-light ">
               <div id="logo" class="col-md-2	col-lg-2	col-xl-2 d-none d-sm-none d-md-block" style="text-align: center;">
+                
                 <%= image_tag("logo.png", class: "img img-fluid")%>
               </div>
               <div id="name" class="col-12	col-sm-10	col-md-8	col-lg-8	col-xl-8" style="text-align: center;">
                 <%= image_tag("name.gif" , class: "imge img-fluid")%>
               </div>
               <div id="lang" class="col-12	col-sm-2	col-md-2	col-lg-2	col-xl-2"  style="text-align: right;">
-                  <%= image_tag("flags/us.gif", class: "img img-fluid ")%>
-                  <%= image_tag("flags/jp.gif", class: "img img-fluid ")%>
+                  <%#= image_tag("flags/us.gif", class: "img img-fluid ")%>
+                  <%#= image_tag("flags/jp.gif", class: "img img-fluid ")%>
+
+              <% ApplicationController::AVAILABLE_LOCALES.each do |locale|%>
+                  <% language_name = t('locate.' + locale, :locale =>locale) %>
+                    <nav-li>
+                      <small>
+                        <%= link_to params.permit!.merge({:locale => locale}), :title => language_name do %>&nbsp;
+                          <%= image_tag ("flags/#{locale}.gif")%>&nbsp;
+                        <%end%>
+                      </small>
+                    </nav-li>
+                  <%end%>
               </div>
+        
       <!-- upper nav index bar end-->
-      <nav class="navbar navbar-expand-lg " >
+      <nav class="navbar navbar-expand-lg container" >
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <%= link_to_unless_current("Home", { action: "index" }) %>
+              <%= link_to_unless_current(t('home'), { action: "index" }) %>
             </li>
             <li class="nav-item">
-              <%= link_to_unless_current("About Us", { action: "about" }) %>
+              <%= link_to_unless_current(t('about_us'), { action: "about" }) %>
             </li>
             <li class="nav-item">
-              <%= link_to_unless_current("Our service", { action: "service" }) %>
+              <%= link_to_unless_current(t('our_service'), { action: "service" }) %>
             </li>
             <li class="nav-item">
-              <%= link_to_unless_current("Loan", { action: "loan" }) %>
-            </li>
-            <li class="nav-item">
-              <%= link_to_unless_current("Room", { action: "room" }) %>
-            </li>
-            <li class="nav-item">
-              <%= link_to_unless_current("Hostel", { action: "hostel" }) %>
-            </li>
-            <li class="nav-item">
-              <%= link_to_unless_current("Contact us", { action: "contact" }) %>
+              <%= link_to_unless_current(t('contact_us'), { action: "contact" }) %>
             </li>
           </ul>
         </div>
       </nav>
+      </div>
       <!-- side nav bar start-->
     </div>
       
